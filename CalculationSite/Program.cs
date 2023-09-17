@@ -1,6 +1,4 @@
-using CalculationSite.Data;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+using CalculationSite.Services;
 
 namespace CalculationSite
 {
@@ -10,9 +8,12 @@ namespace CalculationSite
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var services = builder.Services;
+
             // Add services to the container.
-            builder.Services.AddRazorPages();
-            builder.Services.AddServerSideBlazor();
+            services.AddRazorPages();
+            services.AddServerSideBlazor();
+            services.AddScoped<ICalculationService, CalculationService>();
 
             var app = builder.Build();
 
@@ -29,6 +30,9 @@ namespace CalculationSite
 
             app.MapBlazorHub();
             app.MapFallbackToPage("/_Host");
+
+            app.MapControllers();
+
 
             app.Run();
         }
