@@ -2,6 +2,6 @@
 {
     public interface ICalculationService
     {
-        int Calculate();
+        int Calculate(int[] values);
     }
 }
