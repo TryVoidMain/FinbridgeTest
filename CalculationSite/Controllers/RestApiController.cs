@@ -21,14 +21,14 @@ namespace CalculationSite.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public object Calculate(ApiCalculateRequest request)
+        public async Task<object> Calculate(ApiCalculateRequest request)
         {
             try
             {
                 var validator = new ApiCalculateRequestValidator(_configuration);
                 var validationResult = validator.Validate(request);
                 ValidationException.ThrowOnFailure(validationResult);
-                var result = _calculationService.Calculate(request.Values);
+                var result = await _calculationService.Calculate(request.Values);
 
                 return result;
             }

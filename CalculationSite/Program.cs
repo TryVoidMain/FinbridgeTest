@@ -1,4 +1,5 @@
 using CalculationSite.Services;
+using Serilog;
 
 namespace CalculationSite
 {
@@ -7,6 +8,11 @@ namespace CalculationSite
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Host
+                .UseSerilog((context, configuration) => configuration
+                    .ReadFrom.Configuration(context.Configuration)
+                    .WriteTo.Console());
 
             var services = builder.Services;
 
@@ -23,16 +29,14 @@ namespace CalculationSite
                 app.UseExceptionHandler("/Error");
             }
 
-
             app.UseStaticFiles();
 
             app.UseRouting();
-
             app.MapBlazorHub();
             app.MapFallbackToPage("/_Host");
-
             app.MapControllers();
 
+            Log.Information("App configured succesfully");
 
             app.Run();
         }

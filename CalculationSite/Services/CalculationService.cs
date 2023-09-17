@@ -8,14 +8,17 @@
             _configuration = configuration;
         }
 
-        public int Calculate(int[] values)
+        public Task<int> Calculate(int[] values)
         {
-            int result = 0;
+            return Task.Run(() =>
+            {
+                int result = 0;
 
-            for (int i = 0; i < values.Length; i++)
-                result += (int)Math.Pow(values[i], 2);
+                for (int i = 0; i < values.Length; i++)
+                    result += (int)Math.Pow(values[i], 2);
 
-            return result;
+                return result;
+            });
         }
     }
 }
