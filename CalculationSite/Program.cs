@@ -29,6 +29,8 @@ namespace CalculationSite
                 app.UseExceptionHandler("/Error");
             }
 
+            app.UseSerilogRequestLogging();
+
             app.UseStaticFiles();
 
             app.UseRouting();
