@@ -2,10 +2,16 @@
 {
     public class CalculationService : ICalculationService
     {
-        private readonly IConfiguration _configuration;
+        private bool useDelay;
+        private int minDelay;
+        private int maxDelay;
+        private Random rnd;
         public CalculationService(IConfiguration configuration)
         {
-            _configuration = configuration;
+            InitVariables(configuration);
+
+            if (useDelay)
+                rnd = new Random();
         }
 
         public Task<int> Calculate(int[] values)
@@ -15,10 +21,29 @@
                 int result = 0;
 
                 for (int i = 0; i < values.Length; i++)
-                    result += (int)Math.Pow(values[i], 2);
+                    result += CountPow(values[i]);
 
                 return result;
             });
+        }
+
+        private int CountPow(int value)
+        {
+            if (useDelay)
+                Thread.Sleep(rnd.Next(minDelay, maxDelay));
+
+            return (int)Math.Pow(value, 2);
+        }
+
+        private void InitVariables(IConfiguration configuration)
+        {
+            useDelay = configuration.GetValue<bool>("UseDelay");
+
+            if (useDelay)
+            {
+                minDelay = configuration.GetValue<int>("MinCalculationDelay");
+                maxDelay = configuration.GetValue<int>("MaxCalculationDelay");
+            }
         }
     }
 }

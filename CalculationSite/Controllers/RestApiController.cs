@@ -23,6 +23,7 @@ namespace CalculationSite.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<object> Calculate(ApiCalculateRequest request)
         {
             try
