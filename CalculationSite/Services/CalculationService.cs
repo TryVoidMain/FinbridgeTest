@@ -6,6 +6,9 @@
         private int minDelay;
         private int maxDelay;
         private Random rnd;
+
+        public CalculationService() { }
+
         public CalculationService(IConfiguration configuration)
         {
             InitVariables(configuration);
