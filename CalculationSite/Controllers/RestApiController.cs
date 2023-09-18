@@ -33,11 +33,13 @@ namespace CalculationSite.Controllers
                 var validator = new ApiCalculateRequestValidator(_configuration);
                 var validationResult = validator.Validate(request);
                 ValidationException.ThrowOnFailure(validationResult);
+
                 var result = await _calculationService.Calculate(request.Values);
+                var apiResult = new ApiCalculateResponse() { Result = result };
 
                 _logger.LogInformation($"Result of calculation: {result}");
 
-                return result;
+                return apiResult;
             }
             catch (ValidationException vex)
             {
